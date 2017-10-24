@@ -3,7 +3,8 @@ import {
     Platform,
     StyleSheet,
     Text,
-    View
+    View,
+    ScrollView
 } from 'react-native';
 import Router from "react-native-router-flux/src/Router";
 import Stack from "react-native-router-flux/src/Stack";
@@ -12,7 +13,7 @@ import Scene from "react-native-router-flux/src/Scene";
 export class MainScreen extends Component {
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <Text style={styles.welcome}>
                     Welcome to React Native!
                 </Text>
@@ -22,7 +23,7 @@ export class MainScreen extends Component {
                 <Text style={styles.instructions}>
                     Sample text
                 </Text>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -30,8 +31,6 @@ export class MainScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
     welcome: {
