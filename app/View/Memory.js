@@ -11,7 +11,7 @@ import {
     StatusBar,
     NativeModules
 } from 'react-native';
-import {Actions} from "react-native-router-flux";
+import {DoubleStyledText} from "./DoubleStyledText";
 import {strings} from "./../Strings/LocalizedStrings"
 import {colors} from "../Utils/Consts";
 import {Utils} from "../Utils/Utils";
@@ -39,6 +39,16 @@ export class Memory extends Component {
     timer;
     @observable freeRam = -1;
     @observable freeStorage = -1;
+
+    @computed
+    get getFreeRam() {
+        return this.freeRam + ' MB';
+    }
+
+    @computed
+    get getFreeStorage() {
+        return this.freeStorage + ' MB';
+    }
 
     env = NativeModules.Memory;
 
@@ -89,10 +99,9 @@ export class Memory extends Component {
                     <StatusBar backgroundColor={colors.mainBackgroundColor} barStyle="light-content"/>
                     <View style={[styles.cardStyle, {marginBottom: 20}]}>
                         <Text style={styles.customTitle}>{strings.ram}</Text>
-                        <Text style={styles.customFont}>{strings.totalRam}{this.state.totalRam} MB</Text>
-                        <Text style={[styles.customFont, {marginBottom: 15}]}>
-                            <Text style={{color: 'green'}}>{[strings.freeRam]}</Text>{this.freeRam} MB
-                        </Text>
+                        <DoubleStyledText titleText={strings.totalRam} regularText={this.state.totalRam}/>
+                        <DoubleStyledText titleText={strings.freeRam} regularText={this.getFreeRam} colors={'green'}
+                                          isLast/>
 
                         <RAMShape data={[this.freeRam, this.state.totalRam]} colors={['green', 'white']}
                                   update={(data) => this.sendData(this.freeRam, this.state.totalRam)}/>
@@ -100,10 +109,9 @@ export class Memory extends Component {
 
                     <View style={[styles.cardStyle, {marginBottom: 20}]}>
                         <Text style={styles.customTitle}>{strings.storage}</Text>
-                        <Text style={styles.customFont}>{strings.totalStorage}{this.state.totalStorage} MB</Text>
-                        <Text style={[styles.customFont, {marginBottom: 15}]}>
-                            <Text style={{color: 'green'}}>{[strings.freeStorage]}</Text>{this.freeStorage} MB
-                        </Text>
+                        <DoubleStyledText titleText={strings.totalStorage} regularText={this.state.totalStorage}/>
+                        <DoubleStyledText titleText={strings.freeStorage} regularText={this.getFreeStorage}
+                                          colors={'green'} isLast/>
 
                         <RAMShape data={[this.freeStorage, this.state.totalStorage]} colors={['green', 'white']}
                                   update={(data) => this.sendData(this.freeStorage, this.state.totalStorage)}/>

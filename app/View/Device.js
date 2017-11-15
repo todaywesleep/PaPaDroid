@@ -11,6 +11,7 @@ import {strings} from "./../Strings/LocalizedStrings"
 import {colors} from "../Utils/Consts";
 import {observer} from 'mobx-react';
 import {observable} from "mobx";
+import {DoubleStyledText} from "./DoubleStyledText";
 
 @observer
 export class Device extends Component {
@@ -43,13 +44,13 @@ export class Device extends Component {
                 <StatusBar backgroundColor={colors.mainBackgroundColor} barStyle="light-content" />
                 <View style={styles.cardStyle}>
                     <Text style={styles.customTitle}>{strings.commonDevInfo}</Text>
-                    <Text style={[styles.customFont, {marginTop: 10}]}>{strings.uniqueID}{DeviceInfo.getUniqueID()}</Text>
-                    <Text style={styles.customFont}>{strings.manufacturer}{DeviceInfo.getManufacturer()}</Text>
-                    <Text style={styles.customFont}>{strings.brand}{DeviceInfo.getBrand()}</Text>
-                    <Text style={styles.customFont}>{strings.model}{DeviceInfo.getModel()}</Text>
-                    <Text style={styles.customFont}>{strings.deviceName}{DeviceInfo.getDeviceName()}</Text>
-                    <Text style={styles.customFont}>{strings.phoneNumber}{DeviceInfo.getPhoneNumber()}</Text>
-                    <Text style={[styles.customFont, {marginBottom: 15}]}>{strings.deviceID}{DeviceInfo.getDeviceId()}</Text>
+                    <DoubleStyledText titleText={strings.uniqueID} regularText={DeviceInfo.getUniqueID()}/>
+                    <DoubleStyledText titleText={strings.manufacturer} regularText={DeviceInfo.getManufacturer()}/>
+                    <DoubleStyledText titleText={strings.brand} regularText={DeviceInfo.getBrand()}/>
+                    <DoubleStyledText titleText={strings.model} regularText={DeviceInfo.getModel()}/>
+                    <DoubleStyledText titleText={strings.deviceName} regularText={DeviceInfo.getModel()}/>
+                    <DoubleStyledText titleText={strings.phoneNumber} regularText={DeviceInfo.getDeviceName()}/>
+                    <DoubleStyledText titleText={strings.deviceID} regularText={DeviceInfo.getDeviceId()} isLast/>
                 </View>
                 <View style={styles.cardStyle}>
                     <Text style={styles.customTitle}>{strings.systemInfo}</Text>

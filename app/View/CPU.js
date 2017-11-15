@@ -18,6 +18,7 @@ import {Utils} from "../Utils/Utils";
 import {observer} from 'mobx-react';
 import {observable, computed} from "mobx";
 import {Shapes, ShapesData} from "../Component/Shapes";
+import {DoubleStyledText} from "./DoubleStyledText";
 
 @observer
 export class CPU extends Component {
@@ -157,29 +158,21 @@ export class CPU extends Component {
                     <StatusBar backgroundColor={colors.mainBackgroundColor} barStyle="light-content"/>
                     <View style={styles.cardStyle}>
                         <Text style={styles.customTitle}>{strings.cpu}</Text>
-                        <Text style={styles.customFont}>{strings.cpuName}{this.state.cpuName}</Text>
-                        <Text style={styles.customFont}>{strings.cpuArch}{this.state.cpuArch}</Text>
-                        <Text style={styles.customFont}>{strings.cpuCount}{this.state.cpuCount}</Text>
-                        <Text style={styles.customFont}>{strings.temp}{this.temperature}</Text>
-                        <Text style={styles.customFont}>{strings.cpuMin}{this.correctMinFreq}</Text>
-                        <Text
-                            style={[styles.customFont, {marginBottom: 15}]}>{strings.cpuMax}{this.correctMaxFreq}</Text>
+                        <DoubleStyledText titleText={strings.cpuName} regularText={this.state.cpuName}/>
+                        <DoubleStyledText titleText={strings.cpuArch} regularText={this.state.cpuArch}/>
+                        <DoubleStyledText titleText={strings.cpuCount} regularText={this.state.cpuCount}/>
+                        <DoubleStyledText titleText={strings.temp} regularText={this.temperature}/>
+                        <DoubleStyledText titleText={strings.cpuMin} regularText={this.correctMinFreq}/>
+                        <DoubleStyledText titleText={strings.cpuMax} regularText={this.correctMaxFreq} isLast/>
                     </View>
 
                     <View style={[styles.cardStyle, {marginBottom: 20}]}>
                         <Text style={styles.customTitle}>{strings.usage}</Text>
-                        <Text style={styles.customFont}><Text
-                            style={{color: 'green'}}>{strings.userProcesses}</Text>{this.userLoad}</Text>
-                        <Text style={styles.customFont}><Text
-                            style={{color: 'red'}}>{strings.sysProcesses}</Text>{this.sysLoad}</Text>
-                        <Text style={styles.customFont}><Text
-                            style={{color: 'orange'}}>{strings.idle}</Text>{this.idleLoad}
-                        </Text>
-                        <Text style={styles.customFont}><Text
-                            style={{color: 'gray'}}>{strings.other}</Text>{this.otherLoad}
-                        </Text>
-                        <Text style={[styles.customFont, {marginBottom: 15}]}><Text
-                            style={{color: 'blue'}}>{strings.totalCpu}</Text>{this.totalLoad}</Text>
+                        <DoubleStyledText titleText={strings.userProcesses} regularText={this.userLoad} colors={'green'}/>
+                        <DoubleStyledText titleText={strings.sysProcesses} regularText={this.sysLoad} colors={'red'}/>
+                        <DoubleStyledText titleText={strings.idle} regularText={this.idleLoad} colors={'orange'}/>
+                        <DoubleStyledText titleText={strings.other} regularText={this.otherLoad} colors={'gray'}/>
+                        <DoubleStyledText titleText={strings.totalCpu} regularText={this.totalLoad} colors={'blue'} isLast/>
                         <Shapes data={this.cpuStats} colors={['green', 'red', 'orange', 'gray', 'white']}
                                 update={(data) => this.sendData(this.cpuStats)}/>
                     </View>

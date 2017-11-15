@@ -36,7 +36,7 @@ public class CPU extends ReactContextBaseJavaModule {
     public void returnValue(String pid, Callback successCallback, Callback errorCallback) {
         try {
             switch (pid) {
-                case "BatteryInformation":
+                case "CPU":
                     successCallback.invoke(Main.get_cpu_info());
                     break;
                 case "CPU_ARCH":

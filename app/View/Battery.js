@@ -12,6 +12,7 @@ import {strings} from "./../Strings/LocalizedStrings"
 import {colors} from "../Utils/Consts";
 import {observer} from 'mobx-react';
 import {observable, computed} from "mobx";
+import {DoubleStyledText} from "./DoubleStyledText";
 
 @observer
 export class BatteryInfo extends Component {
@@ -59,8 +60,8 @@ export class BatteryInfo extends Component {
                     <StatusBar backgroundColor={colors.mainBackgroundColor} barStyle="light-content"/>
                     <View style={[styles.cardStyle, {marginBottom: 20}]}>
                         <Text style={styles.customTitle}>{strings.battery}</Text>
-                        <Text style={styles.customFont}>{strings.batteryStatus}{this.status}</Text>
-                        <Text style={styles.customFont}>{strings.batteryState}{this.percentage}</Text>
+                        <DoubleStyledText titleText={strings.batteryStatus} regularText={this.status}/>
+                        <DoubleStyledText titleText={strings.batteryState} regularText={this.percentage} isLast/>
                     </View>
                 </ScrollView>
             </View>
@@ -71,7 +72,8 @@ export class BatteryInfo extends Component {
 const styles = StyleSheet.create({
     customFont: {
         color: 'white',
-        padding: 15,
+        fontSize: 15,
+        padding: 5,
     },
 
     customTitle: {
