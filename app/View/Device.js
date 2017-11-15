@@ -54,24 +54,24 @@ export class Device extends Component {
                 </View>
                 <View style={styles.cardStyle}>
                     <Text style={styles.customTitle}>{strings.systemInfo}</Text>
-                    <Text style={[styles.customFont, {marginTop: 10}]}>{strings.sysName}{DeviceInfo.getSystemName()}</Text>
-                    <Text style={styles.customFont}>{strings.sysVer}{DeviceInfo.getSystemVersion()}</Text>
-                    <Text style={styles.customFont}>{strings.bundleID}{DeviceInfo.getBundleId()}</Text>
-                    <Text style={styles.customFont}>{strings.buildNumber}{DeviceInfo.getBuildNumber()}</Text>
-                    <Text style={styles.customFont}>{strings.apiLevel}{DeviceInfo.getAPILevel()}</Text>
-                    <Text style={styles.customFont}>{strings.appInstanceID}{DeviceInfo.getInstanceID()}</Text>
-                    <Text style={[styles.customFont, {marginBottom: 15}]}>{strings.userAgent}{DeviceInfo.getUserAgent()}</Text>
+                    <DoubleStyledText titleText={strings.sysName} regularText={DeviceInfo.getSystemName()}/>
+                    <DoubleStyledText titleText={strings.sysVer} regularText={DeviceInfo.getSystemVersion()}/>
+                    <DoubleStyledText titleText={strings.bundleID} regularText={DeviceInfo.getBundleId()}/>
+                    <DoubleStyledText titleText={strings.buildNumber} regularText={DeviceInfo.getBuildNumber()}/>
+                    <DoubleStyledText titleText={strings.apiLevel} regularText={DeviceInfo.getAPILevel()}/>
+                    <DoubleStyledText titleText={strings.appInstanceID} regularText={DeviceInfo.getInstanceID()}/>
+                    <DoubleStyledText titleText={strings.userAgent} regularText={DeviceInfo.getUserAgent()} isLast/>
                 </View>
                 <View style={styles.cardStyle}>
                     <Text style={styles.customTitle}>{strings.locInfo}</Text>
-                    <Text style={[styles.customFont, {marginTop: 10}]}>{strings.deviceLocale}{DeviceInfo.getDeviceLocale()}</Text>
-                    <Text style={styles.customFont}>{strings.deviceCountry}{DeviceInfo.getDeviceCountry()}</Text>
-                    <Text style={[styles.customFont, {marginBottom: 15}]}>{strings.timeZone}{DeviceInfo.getTimezone()}</Text>
+                    <DoubleStyledText titleText={strings.deviceLocale} regularText={DeviceInfo.getDeviceLocale()}/>
+                    <DoubleStyledText titleText={strings.deviceCountry} regularText={DeviceInfo.getDeviceCountry()}/>
+                    <DoubleStyledText titleText={strings.timeZone} regularText={DeviceInfo.getTimezone()} isLast/>
                 </View>
                 <View style={[styles.cardStyle, {marginBottom: 20}]}>
                     <Text style={styles.customTitle}>{strings.netInfo}</Text>
-                    <Text style={[styles.customFont, {marginTop: 10}]}>{strings.ip}{this.ip}</Text>
-                    <Text style={[styles.customFont, {marginBottom: 15}]}>{strings.mac}{this.mac}</Text>
+                    <DoubleStyledText titleText={strings.ip} regularText={this.ip}/>
+                    <DoubleStyledText titleText={strings.mac} regularText={this.mac} isLast/>
                 </View>
             </ScrollView>
             </View>

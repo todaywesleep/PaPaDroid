@@ -50,6 +50,16 @@ export class Memory extends Component {
         return this.freeStorage + ' MB';
     }
 
+    @computed
+    get getTotalStorage() {
+        return this.state.totalStorage + ' MB';
+    }
+
+    @computed
+    get getTotalRam() {
+        return this.state.totalRam + ' MB';
+    }
+
     env = NativeModules.Memory;
 
     componentWillMount() {
@@ -99,7 +109,7 @@ export class Memory extends Component {
                     <StatusBar backgroundColor={colors.mainBackgroundColor} barStyle="light-content"/>
                     <View style={[styles.cardStyle, {marginBottom: 20}]}>
                         <Text style={styles.customTitle}>{strings.ram}</Text>
-                        <DoubleStyledText titleText={strings.totalRam} regularText={this.state.totalRam}/>
+                        <DoubleStyledText titleText={strings.totalRam} regularText={this.getTotalRam}/>
                         <DoubleStyledText titleText={strings.freeRam} regularText={this.getFreeRam} colors={'green'}
                                           isLast/>
 
@@ -109,7 +119,7 @@ export class Memory extends Component {
 
                     <View style={[styles.cardStyle, {marginBottom: 20}]}>
                         <Text style={styles.customTitle}>{strings.storage}</Text>
-                        <DoubleStyledText titleText={strings.totalStorage} regularText={this.state.totalStorage}/>
+                        <DoubleStyledText titleText={strings.totalStorage} regularText={this.getTotalStorage}/>
                         <DoubleStyledText titleText={strings.freeStorage} regularText={this.getFreeStorage}
                                           colors={'green'} isLast/>
 
