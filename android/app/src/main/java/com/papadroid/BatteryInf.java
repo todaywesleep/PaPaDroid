@@ -23,10 +23,11 @@ import java.util.HashMap;
 import java.util.Set;
 
 public class BatteryInf extends ReactContextBaseJavaModule {
-    BatteryInfUtils utils;
+    ReactApplicationContext context;
+
     public BatteryInf(ReactApplicationContext reactContext) {
         super(reactContext);
-        this.utils = new BatteryInfUtils(reactContext);
+        this.context = reactContext;
     }
 
     @ReactMethod
@@ -34,10 +35,10 @@ public class BatteryInf extends ReactContextBaseJavaModule {
         try {
             switch (type) {
                 case "PERCENTAGE":
-                    successCallback.invoke(this.utils.getPercentage());
+                    successCallback.invoke(BatteryInfUtils.getPercentage(getStatus()));
                     break;
                 case "STATUS":
-                    successCallback.invoke(this.utils.getStatus());
+                    successCallback.invoke(BatteryInfUtils.getStatus(getStatus()));
                     break;
             }
         } catch (Exception e) {
@@ -49,27 +50,22 @@ public class BatteryInf extends ReactContextBaseJavaModule {
     public String getName() {
         return "BatteryInf";
     }
+
+    public Intent getStatus(){
+         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+
+         return this.context.registerReceiver(null, ifilter);
+    }
 }
 
 class BatteryInfUtils {
-    static ReactApplicationContext context;
-    static IntentFilter ifilter;
-    static Intent batteryStatus;
-
-    public BatteryInfUtils(ReactApplicationContext reactContext) {
-        this.context = reactContext;
-
-        this.ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        this.batteryStatus = this.context.registerReceiver(null, ifilter);
-    }
-
-    public static String getPercentage(){
+    public static String getPercentage(Intent batteryStatus){
         int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
 
         return String.valueOf(level);
     }
 
-    public static String getStatus(){
+    public static String getStatus(Intent batteryStatus){
         int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         if (status == BatteryManager.BATTERY_STATUS_FULL)
             return  "Full charge";

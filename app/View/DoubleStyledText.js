@@ -5,7 +5,9 @@ import {
     View,
 } from 'react-native';
 import {observable, computed} from "mobx";
+import {observer} from 'mobx-react';
 
+@observer
 export class DoubleStyledText extends Component{
     constructor(props){
         super(props);
