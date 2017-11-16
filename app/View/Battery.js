@@ -13,7 +13,7 @@ import {colors} from '../Utils/Consts';
 import {observer} from 'mobx-react';
 import {observable, computed} from 'mobx';
 import {DoubleStyledText} from './DoubleStyledText';
-import {BatteryIndicator} from '../Component/BatteryIndicator';
+//import {DataBase} from "../Utils/DataBase";
 
 @observer
 export class BatteryInfo extends Component {
@@ -26,10 +26,12 @@ export class BatteryInfo extends Component {
     constructor(props) {
         super(props);
 
+        //DataBase.readWrites();
         this.getBatteryInformation('PERCENTAGE');
         this.getBatteryInformation('STATUS');
-        this.source = this.getImageBy(this.percentage);
+    }
 
+    componentWillMount(){
         this.timer = setInterval(() => {
             this.getBatteryInformation('PERCENTAGE');
             this.getBatteryInformation('STATUS');

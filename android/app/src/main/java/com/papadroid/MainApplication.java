@@ -3,6 +3,8 @@ package com.papadroid;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
+import io.realm.react.RealmReactPackage;
 import com.horcrux.svg.SvgPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -30,6 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
                 new RNDeviceInfo(),
                 new ReactNativeLocalizationPackage(),
                 new MainReactPackage(),
+            new BackgroundTaskPackage(),
+            new RealmReactPackage(),
                 new SvgPackage()
             );
         }

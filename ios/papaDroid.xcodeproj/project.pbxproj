@@ -52,6 +52,9 @@
 		D096956C80EA4147B71C46BC /* libRCTBatteryStatus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 619EAAC024C343EF8A58DC69 /* libRCTBatteryStatus.a */; };
 		93C66CB74E164C0882037E57 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 30503C8B55214EFC824D521A /* libRNSVG.a */; };
 		F04C0ED511974D9C95A2A3C9 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B617FFFB7F4929A32AA52E /* libRNSVG-tvOS.a */; };
+		D160D685A6EF4E0E8390CFE8 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9A7C675EA454CA1833F6727 /* libRealmReact.a */; };
+		8C9A9BE6F54C4FA982D944C1 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E7C2A1A2DBF1414DACD222BD /* libc++.tbd */; };
+		C419A4E47ACE42FCB2773FC9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A448892F04094288B26299F9 /* libz.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -287,6 +290,10 @@
 		227645D45DA94128805010E4 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; name = "RNSVG.xcodeproj"; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		30503C8B55214EFC824D521A /* libRNSVG.a */ = {isa = PBXFileReference; name = "libRNSVG.a"; path = "libRNSVG.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		84B617FFFB7F4929A32AA52E /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; name = "libRNSVG-tvOS.a"; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		F73AC8E3CF634DA48A73A887 /* RealmReact.xcodeproj */ = {isa = PBXFileReference; name = "RealmReact.xcodeproj"; path = "../node_modules/realm/react-native/ios/RealmReact.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		F9A7C675EA454CA1833F6727 /* libRealmReact.a */ = {isa = PBXFileReference; name = "libRealmReact.a"; path = "libRealmReact.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		E7C2A1A2DBF1414DACD222BD /* libc++.tbd */ = {isa = PBXFileReference; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		A448892F04094288B26299F9 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,6 +328,9 @@
 				D096956C80EA4147B71C46BC /* libRCTBatteryStatus.a in Frameworks */,
 				93C66CB74E164C0882037E57 /* libRNSVG.a in Frameworks */,
 				F04C0ED511974D9C95A2A3C9 /* libRNSVG-tvOS.a in Frameworks */,
+				D160D685A6EF4E0E8390CFE8 /* libRealmReact.a in Frameworks */,
+				8C9A9BE6F54C4FA982D944C1 /* libc++.tbd in Frameworks */,
+				C419A4E47ACE42FCB2773FC9 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +494,7 @@
 				6DD62B69674742DBB9B96788 /* RNVectorIcons.xcodeproj */,
 				2081DA3C69D545AC929109E9 /* RCTBatteryStatus.xcodeproj */,
 				227645D45DA94128805010E4 /* RNSVG.xcodeproj */,
+				F73AC8E3CF634DA48A73A887 /* RealmReact.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -505,6 +516,7 @@
 				00E356EF1AD99517003FC87E /* papaDroidTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				4553C4E3FB3641AA9F8C22C2 /* Resources */,
+				7DBF1FBACE3D4FC1B9F21FDB /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -546,6 +558,16 @@
 				3773EDE3B448411887FAACB5 /* Zocial.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+			path = "";
+		};
+		7DBF1FBACE3D4FC1B9F21FDB /* Frameworks */ = {
+			isa = "PBXGroup";
+			children = (
+				E7C2A1A2DBF1414DACD222BD /* libc++.tbd */,
+				A448892F04094288B26299F9 /* libz.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 			path = "";
 		};
@@ -1051,6 +1073,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/papaDroid.app/papaDroid";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1059,6 +1082,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\@remobile\react-native-battery-status\ios\RCTBatteryStatus",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 			};
 			name = Debug;
@@ -1079,6 +1103,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/papaDroid.app/papaDroid";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1087,6 +1112,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\@remobile\react-native-battery-status\ios\RCTBatteryStatus",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 			};
 			name = Release;
@@ -1113,6 +1139,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\@remobile\react-native-battery-status\ios\RCTBatteryStatus",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 			};
 			name = Debug;
@@ -1138,6 +1165,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\@remobile\react-native-battery-status\ios\RCTBatteryStatus",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 			};
 			name = Release;
@@ -1167,6 +1195,7 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1175,6 +1204,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\@remobile\react-native-battery-status\ios\RCTBatteryStatus",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 			};
 			name = Debug;
@@ -1204,6 +1234,7 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1212,6 +1243,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
 					"$(SRCROOT)\..\node_modules\@remobile\react-native-battery-status\ios\RCTBatteryStatus",
 					"$(SRCROOT)\..\node_modules\react-native-svg\ios/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 			};
 			name = Release;
@@ -1236,6 +1268,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -1260,6 +1293,7 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Release;
