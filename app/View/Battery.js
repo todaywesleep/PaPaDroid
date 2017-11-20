@@ -5,15 +5,34 @@ import {
     View,
     ScrollView,
     StatusBar,
-    DeviceEventEmitter,
-    NativeModules, Image,
+    AppState,
+    NativeModules,
+    Image,
 } from 'react-native';
 import {strings} from './../Strings/LocalizedStrings'
 import {colors} from '../Utils/Consts';
 import {observer} from 'mobx-react';
 import {observable, computed} from 'mobx';
 import {DoubleStyledText} from './DoubleStyledText';
-//import {DataBase} from "../Utils/DataBase";
+import {DataBase} from "../Utils/DataBase";
+
+export const backgroundBattery = () => {
+    let battery = NativeModules.BatteryInf;
+    let newObj = {};
+
+    battery.returnValue(type, (result) => {
+        switch (type) {
+            case 'STATUS':
+                newObj.status = result;
+                break;
+        }
+    }, (error) => {
+        console.warn(error);
+        return error.toString();
+    });
+
+    return newObj;
+};
 
 @observer
 export class BatteryInfo extends Component {
@@ -22,21 +41,27 @@ export class BatteryInfo extends Component {
     @observable status = 'Loading...';
     @observable source;
     timer;
+    timerRealm;
 
     constructor(props) {
         super(props);
 
-        //DataBase.readWrites();
         this.getBatteryInformation('PERCENTAGE');
         this.getBatteryInformation('STATUS');
+
+        this.initIntervals();
     }
 
-    componentWillMount(){
-        this.timer = setInterval(() => {
-            this.getBatteryInformation('PERCENTAGE');
-            this.getBatteryInformation('STATUS');
-            this.source = this.getImageBy(this.percentage);
-        }, 5000);
+    componentWillMount() {
+        AppState.addEventListener('change', state => {
+            if (state === 'background' || state === 'inactive') {
+                DataBase.createBatteryWrite(this.status === 'Charging', new Date());
+                clearInterval(this.timer);
+                clearInterval(this.timerRealm);
+            } else if (state === 'active') {
+                this.initIntervals();
+            }
+        });
     }
 
     getImageBy(percentage) {
@@ -62,6 +87,19 @@ export class BatteryInfo extends Component {
             case (percentage >= 0):
                 return require('../../src/pics/battery/battery1.png');
         }
+    }
+
+    initIntervals(){
+        this.timer = setInterval(() => {
+            this.getBatteryInformation('PERCENTAGE');
+            this.getBatteryInformation('STATUS');
+            this.source = this.getImageBy(this.percentage);
+        }, 2000);
+
+        this.timerRealm = setInterval(() => {
+            if (this.status !== 'Loading...')
+                DataBase.createBatteryWrite(this.status === 'Charging', new Date(), 'inApp');
+        }, 60000);
     }
 
     getBatteryInformation(type) {

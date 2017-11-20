@@ -24,7 +24,7 @@
     "react-native-background-task": "^0.2.1",
     "react-native-device-info": "^0.12.1",
     "react-native-localization": "^0.2.1",
-    "react-native-router-flux": "^4.0.0-beta.22",
+    "react-native-router-flux": "^4.0.0-beta.24",
     "react-native-svg": "^6.0.0",
     "react-native-vector-icons": "^4.4.2",
     "realm": "^2.0.7"

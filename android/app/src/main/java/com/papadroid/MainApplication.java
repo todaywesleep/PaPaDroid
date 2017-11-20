@@ -32,8 +32,8 @@ public class MainApplication extends Application implements ReactApplication {
                 new RNDeviceInfo(),
                 new ReactNativeLocalizationPackage(),
                 new MainReactPackage(),
-            new BackgroundTaskPackage(),
-            new RealmReactPackage(),
+                new BackgroundTaskPackage(),
+                new RealmReactPackage(),
                 new SvgPackage()
             );
         }
@@ -53,5 +53,6 @@ public class MainApplication extends Application implements ReactApplication {
     public void onCreate() {
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
+        BackgroundTaskPackage.useContext(this);
     }
 }

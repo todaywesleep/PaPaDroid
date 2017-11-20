@@ -4,6 +4,11 @@ export const strings = new LocalizedStrings({
     en:{
         start: 'Start working',
         systemInfo: 'System information',
+        statistic: 'Statistic',
+        averageRAM: 'Average RAM usage: ',
+        averageStorage: 'Average storage usage: ',
+        averageChargingTime: 'Average charge time: ',
+        lastChargeTime: 'Last charge: ',
         locInfo: 'Location info',
         netInfo: 'Network info',
         cpu: 'CPU info',
@@ -65,6 +70,11 @@ export const strings = new LocalizedStrings({
     ru: {
         start: 'Начать работу',
         systemInfo: 'Системная информация: ',
+        statistic: 'Статистика',
+        averageRAM: 'Среднее потребление ОП: ',
+        averageStorage: 'Среднее потребление физической памяти: ',
+        averageChargingTime: 'Среднее время зарядки: ',
+        lastChargeTime: 'Последняя зарядка: ',
         locInfo: 'Информация о местонахождении',
         netInfo: 'Информация о сети: ',
         cpu: 'Центральный процессор',

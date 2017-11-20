@@ -8,6 +8,7 @@ import {BatteryInfo} from "./app/View/Battery";
 import {CPU} from "./app/View/CPU";
 import {Memory} from "./app/View/Memory";
 import {colors} from "./app/Utils/Consts";
+import {CustomButton} from "./app/Component/CustomButton";
 
 export default Application = () => (
     <Router key={'key0'}>
@@ -73,7 +74,7 @@ const TabIcon = ({focused, title}) => {
             );
         case 'CPU info':
             return (
-                <Image source={require("./src/icons/ssd.png")}
+                <Image source={require("./src/icons/cpu.png")}
                        style={style}
                        resizeMode='cover'/>
             );
@@ -84,7 +85,7 @@ const TabIcon = ({focused, title}) => {
             );
         case 'Memory info':
             return (
-                <Image source={require("./src/icons/phone.png")}
+                <Image source={require("./src/icons/memory.png")}
                        style={style}/>
             )
     }

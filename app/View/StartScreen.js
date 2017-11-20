@@ -9,14 +9,41 @@ import {
     Image,
     Dimensions, StatusBar
 } from 'react-native';
-import {Actions} from "react-native-router-flux";
-import {strings} from "./../Strings/LocalizedStrings";
-import {colors} from "../Utils/Consts";
+import {Actions} from 'react-native-router-flux';
+import {strings} from './../Strings/LocalizedStrings';
+import {colors} from '../Utils/Consts';
+import BackgroundTask from 'react-native-background-task';
+import {DataBase} from '../Utils/DataBase';
+import {backgroundBattery} from './Battery';
+import {backgroundTaskForMemory} from './Memory';
+
+BackgroundTask.define(() => {
+    let battery = backgroundBattery();
+    let memory = backgroundTaskForMemory();
+
+    DataBase.writeAll(
+        battery.status === 'Charging',
+        new Date(),
+        'afk',
+        memory.totalStorage,
+        memory.freeStorage,
+        memory.totalRam,
+        memory.freeRam,
+    );
+
+    BackgroundTask.finish();
+});
 
 export class StartScreen extends Component {
     constructor(props) {
         super(props);
 
+        let realm = new Realm();
+        realm.write(() => {
+            realm.deleteAll();
+        });
+
+        BackgroundTask.schedule({period: 900});
         strings.setLanguage('en');
     }
 
@@ -25,10 +52,10 @@ export class StartScreen extends Component {
     }
 
     render() {
-        let img = require('./../../src/pics/logo.png');
+        let img = require('../../src/logo.png');
         return (
             <View style={styles.grouping}>
-                <StatusBar backgroundColor={colors.cardBackgroundColor} barStyle="light-content" />
+                <StatusBar backgroundColor={colors.cardBackgroundColor} barStyle='light-content' />
                 <View style={styles.imageBox}>
                     <Image
                         style={styles.image}

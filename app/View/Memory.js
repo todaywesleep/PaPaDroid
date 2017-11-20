@@ -1,15 +1,12 @@
 import React, {Component} from 'react';
 import {
-    Platform,
     StyleSheet,
     Text,
     View,
     ScrollView,
-    TouchableHighlight,
-    Image,
-    Dimensions,
     StatusBar,
-    NativeModules
+    NativeModules,
+    AppState,
 } from 'react-native';
 import {DoubleStyledText} from "./DoubleStyledText";
 import {strings} from "./../Strings/LocalizedStrings"
@@ -17,13 +14,42 @@ import {colors} from "../Utils/Consts";
 import {Utils} from "../Utils/Utils";
 import {observer} from 'mobx-react';
 import {observable, computed} from "mobx";
-import {Shapes, ShapesData} from "../Component/Shapes";
+import {ShapesData} from "../Component/Shapes";
 import {RAMShape} from "../Component/RAMShape";
+import {DataBase} from "../Utils/DataBase";
+
+export const backgroundTaskForMemory = () => {
+    let env = NativeModules.Memory;
+    let newObj = {};
+
+    env.getInformation(type, (result) => {
+        switch (type) {
+            case "TOTALRAM":
+                newObj.totalRam = Utils.kbTOmb(result, true);
+                break;
+            case "FREERAM":
+                newObj.freeRam = Utils.kbTOmb(result, true);
+                break;
+            case "FREESTORAGE":
+                newObj.freeStorage = result;
+                break;
+            case "TOTALSTORAGE":
+                newObj.totalStorage = Utils.kbTOmb(result, true);
+                break;
+        }
+    }, (error) => {
+        console.warn(error);
+        return error.toString();
+    });
+
+    return newObj
+};
 
 @observer
 export class Memory extends Component {
     constructor(props) {
         super(props);
+        this.initIntervals();
 
         this.state = {
             totalRam: -1,
@@ -34,9 +60,34 @@ export class Memory extends Component {
         this.getRAMinformation("FREERAM");
         this.getRAMinformation("TOTALSTORAGE");
         this.getRAMinformation("FREESTORAGE");
+
+        AppState.addEventListener('change', state => {
+            if (state === 'background' || state === 'inactive') {
+                DataBase.createStorageWrite(this.state.totalStorage, this.freeStorage);
+                DataBase.createRAMWrite(this.state.totalRam, this.freeRam);
+
+                clearInterval(this.timer);
+                clearInterval(this.timerRealm);
+            } else if (state === 'active') {
+                this.initIntervals();
+            }
+        });
+    }
+
+    initIntervals() {
+        this.timer = setInterval(() => {
+            this.getRAMinformation("FREERAM");
+            this.getRAMinformation("FREESTORAGE");
+        }, 2000);
+
+        this.timerRealm = setInterval(() => {
+            DataBase.createStorageWrite(this.state.totalStorage, this.freeStorage);
+            DataBase.createRAMWrite(this.state.totalRam, this.freeRam);
+        }, 60000);
     }
 
     timer;
+    timerRealm;
     @observable freeRam = -1;
     @observable freeStorage = -1;
 
@@ -61,13 +112,6 @@ export class Memory extends Component {
     }
 
     env = NativeModules.Memory;
-
-    componentWillMount() {
-        this.timer = setInterval(() => {
-            this.getRAMinformation("FREERAM");
-            this.getRAMinformation("FREESTORAGE");
-        }, 1000);
-    }
 
     getRAMinformation(type) {
         this.env.getInformation(type, (result) => {
