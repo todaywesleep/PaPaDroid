@@ -3,6 +3,8 @@ import LocalizedStrings from 'react-native-localization';
 export const strings = new LocalizedStrings({
     en:{
         start: 'Start working',
+        ru: 'Russian',
+        en: 'English',
         systemInfo: 'System information',
         statistic: 'Statistic',
         averageRAM: 'Average RAM usage: ',
@@ -69,6 +71,8 @@ export const strings = new LocalizedStrings({
     },
     ru: {
         start: 'Начать работу',
+        ru: 'Русский',
+        en: 'Английский',
         systemInfo: 'Системная информация: ',
         statistic: 'Статистика',
         averageRAM: 'Среднее потребление ОП: ',

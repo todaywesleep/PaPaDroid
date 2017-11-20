@@ -40,18 +40,18 @@ export class DataBase {
         let newDate;
         let avgChargeTime = 0;
 
-        if (!isCharging) {
+        if (isCharging === false) {
             chargeTime = DataBase.checkForNilOrUndef(batteryInf.boofTime) ? batteryInf.boofTime : 0;
             let needDivide = chargeTime !== 0;
             avgChargeTime = batteryInf.averageChargingTime !== undefined ? (batteryInf.averageChargingTime + chargeTime / (needDivide ? 2 : 1)) : 0;
-            newDate = DataBase.checkForNilOrUndef(batteryInf.lastChargeDate) ? Date.parse(batteryInf.lastChargeDate) : new Date();
+            newDate = DataBase.checkForNilOrUndef(batteryInf.lastChargeDate) ? new Date(batteryInf.lastChargeDate) : new Date();
             chargeTime = 0;
         }
         if (isCharging) {
             chargeTime = DataBase.checkForNilOrUndef(batteryInf.boofTime) ? batteryInf.boofTime : 0;
             chargeTime += sender === 'afk' ? 15 : 1;
             avgChargeTime = DataBase.checkForNilOrUndef(batteryInf.averageChargingTime) ? batteryInf.averageChargingTime : 0;
-            newDate = date;
+            newDate = new Date();
         }
 
         let newObject = {

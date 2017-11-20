@@ -7,7 +7,9 @@ import {
     ScrollView,
     TouchableHighlight,
     Image,
-    Dimensions, StatusBar
+    Dimensions,
+    StatusBar,
+    Modal,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {strings} from './../Strings/LocalizedStrings';
@@ -38,13 +40,21 @@ export class StartScreen extends Component {
     constructor(props) {
         super(props);
 
-        let realm = new Realm();
-        realm.write(() => {
-            realm.deleteAll();
-        });
+        // let realm = new Realm();
+        // realm.write(() => {
+        //     realm.deleteAll();
+        // });
 
         BackgroundTask.schedule({period: 900});
         strings.setLanguage('en');
+
+        this.state = {
+            modalVisible: false
+        }
+    }
+
+    setModalVisible(visible) {
+        this.setState({modalVisible: visible});
     }
 
     onPress() {
@@ -55,7 +65,54 @@ export class StartScreen extends Component {
         let img = require('../../src/logo.png');
         return (
             <View style={styles.grouping}>
-                <StatusBar backgroundColor={colors.cardBackgroundColor} barStyle='light-content' />
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={() => {
+                        this.setState({modalVisible: false})
+                    }}
+                >
+                    <TouchableHighlight style={{flex: 1}} onPress={() => {
+                        this.setModalVisible(false)
+                    }}>
+                        <View style={{flex: 1}}/>
+                    </TouchableHighlight>
+
+                    <View>
+                        <TouchableHighlight
+                            style={styles.buttonBox}
+                            onPress={() => {
+                                strings.setLanguage('en');
+                                this.setModalVisible(false);
+                                this.forceUpdate();
+                            }}
+                            underlayColor={'transparent'}
+                        >
+                            <Text style={styles.textStyle}> {strings.en} </Text>
+                        </TouchableHighlight>
+
+                        <TouchableHighlight
+                            style={styles.buttonBox}
+                            onPress={() => {
+                                strings.setLanguage('ru');
+                                this.setModalVisible(false);
+                                this.forceUpdate();
+                            }}
+                            underlayColor={'transparent'}
+                        >
+                            <Text style={styles.textStyle}> {strings.ru} </Text>
+                        </TouchableHighlight>
+                    </View>
+
+                    <TouchableHighlight style={{flex: 1}} onPress={() => {
+                        this.setModalVisible(false)
+                    }}>
+                        <View style={{flex: 1}}/>
+                    </TouchableHighlight>
+                </Modal>
+
+                <StatusBar backgroundColor={colors.cardBackgroundColor} barStyle='light-content'/>
                 <View style={styles.imageBox}>
                     <Image
                         style={styles.image}
@@ -73,6 +130,14 @@ export class StartScreen extends Component {
                     >
                         <Text style={styles.textStyle}> {strings.start} </Text>
                     </TouchableHighlight>
+
+                    <TouchableHighlight
+                        style={styles.buttonBox}
+                        onPress={() => this.setModalVisible(!this.state.modalVisible)}
+                        underlayColor={'transparent'}
+                    >
+                        <Text style={styles.textStyle}> {strings.changeLanguage} </Text>
+                    </TouchableHighlight>
                 </View>
             </View>
         )
@@ -81,19 +146,20 @@ export class StartScreen extends Component {
 
 const styles = StyleSheet.create({
     imageBox: {
-        justifyContent:'center',
+        justifyContent: 'center',
         alignItems: 'center',
         marginTop: 25,
         flex: 1,
     },
 
-    image:{
+    image: {
         height: 300,
         width: 300,
     },
 
     buttonBox: {
         backgroundColor: colors.cardBackgroundColor,
+        marginBottom: 20,
     },
 
     grouping: {
@@ -102,7 +168,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.mainBackgroundColor,
     },
 
-    textStyle:{
+    textStyle: {
         color: 'white',
         fontSize: 20,
         fontWeight: 'bold',
