@@ -157,18 +157,18 @@ export class Memory extends Component {
                         <DoubleStyledText titleText={strings.freeRam} regularText={this.getFreeRam} colors={'green'}
                                           isLast/>
 
-                        <RAMShape data={[this.freeRam, this.state.totalRam]} colors={['green', 'white']}
-                                  update={(data) => this.sendData(this.freeRam, this.state.totalRam)}/>
+                        <RAMShape data={[this.freeRam, this.state.totalRam]} colors={['white', 'green']}
+                                  update={(data) => this.sendData(this.state.totalRam - this.freeRam, this.freeRam)}/>
                     </View>
 
                     <View style={[styles.cardStyle, {marginBottom: 20}]}>
                         <Text style={styles.customTitle}>{strings.storage}</Text>
-                        <DoubleStyledText titleText={strings.totalStorage} regularText={this.getFreeStorage}/>
-                        <DoubleStyledText titleText={strings.freeStorage} regularText={this.getTotalStorage}
+                        <DoubleStyledText titleText={strings.totalStorage} regularText={this.getTotalStorage}/>
+                        <DoubleStyledText titleText={strings.freeStorage} regularText={this.getFreeStorage}
                                           colors={'green'} isLast/>
 
-                        <RAMShape data={[this.freeStorage, this.state.totalStorage]} colors={['green', 'white']}
-                                  update={(data) => this.sendData(this.freeStorage, this.state.totalStorage)}/>
+                        <RAMShape data={[this.freeStorage, this.state.totalStorage]} colors={['white', 'green']}
+                                  update={(data) => this.sendData(this.state.totalStorage - this.freeStorage, this.freeStorage)}/>
                     </View>
                 </ScrollView>
             </View>

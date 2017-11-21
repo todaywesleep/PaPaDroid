@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {
-    Platform,
-    StyleSheet,
-    Text,
     View,
-    ART, ScrollView,
+    ART,
+    ScrollView,
+    Animated
 } from 'react-native';
 import * as d3 from "d3-shape";
 import {observer} from 'mobx-react';
 import {observable, computed} from "mobx";
+import Morph from 'art/morph/path';
 
 const {
     Surface,
@@ -39,6 +39,11 @@ export class RAMShape extends Component {
     @observable data = [];
     timer;
 
+    constructor(props) {
+        super(props);
+        this.colors = this.props.colors;
+    }
+
     arcs = d3.pie()
         .value(function (d) {
             return d.value
@@ -63,33 +68,30 @@ export class RAMShape extends Component {
         }, 1000)
     }
 
-    constructor(props) {
-        super(props);
-        this.colors = this.props.colors;
-    }
-
     render() {
         let generatedPaths = preparePaths(this.arcs);
         return (
             <ScrollView>
-                <View style={{flex: 1, alignItems: 'center'}}>
+                <Animated.View style={{flex: 1, alignItems: 'center'}}>
                     <View style={{margin: 20}}>
                         <Surface width={166} height={166}>
                             <Group x={80} y={80}>
                                 {
-                                    // pieChart has all the svg paths calculated in step 2)
-                                    generatedPaths.map((item, index) =>
+                                    // pieChart has all the svg paths calculated in preparePaths method)
+                                    generatedPaths.map((item, index) => {
+                                        return(
                                         (<Shape
                                             d={item}
                                             fill={this.colors[index]}
                                             stroke={'black'}
                                             key={index}
                                         />))
+                                    })
                                 }
                             </Group>
                         </Surface>
                     </View>
-                </View>
+                </Animated.View>
             </ScrollView>
         )
     }

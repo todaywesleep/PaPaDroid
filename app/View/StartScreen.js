@@ -7,7 +7,7 @@ import {
     Image,
     StatusBar,
     Modal,
-    ActivityIndicator
+    Animated
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {strings} from './../Strings/LocalizedStrings';
@@ -52,11 +52,31 @@ export class StartScreen extends Component {
         BackgroundTask.schedule({period: 900});
         this.state = {
             modalVisible: false,
+            startMargin: new Animated.Value(0),
         }
     }
 
     setModalVisible(visible) {
         this.setState({modalVisible: visible});
+    }
+
+    componentWillMount() {
+        this.cycleAnimation();
+    }
+
+    cycleAnimation() {
+        Animated.sequence([
+            Animated.timing(this.state.startMargin, {
+                toValue: 25,
+                duration: 1000,
+            }),
+            Animated.timing(this.state.startMargin, {
+                toValue: 0,
+                duration: 1000
+            })
+        ]).start(() => {
+            this.cycleAnimation();
+        });
     }
 
     onPress() {
@@ -117,9 +137,9 @@ export class StartScreen extends Component {
                 </Modal>
 
                 <StatusBar backgroundColor={colors.cardBackgroundColor} barStyle='light-content'/>
-                <View style={styles.imageBox}>
-                    <Image
-                        style={styles.image}
+                <View style={[styles.imageBox]}>
+                    <Animated.Image
+                        style={[styles.image, {marginTop: this.state.startMargin}]}
                         source={img}
                         resizeMode='stretch'
                     />
@@ -153,12 +173,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 8,
+        marginTop: 25,
     },
 
     imageBox: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 25,
         flex: 1,
     },
 
