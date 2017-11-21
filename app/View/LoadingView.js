@@ -62,5 +62,5 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: 'white',
         padding: 6
-    }
+    },
 });

@@ -4,6 +4,7 @@ export const strings = new LocalizedStrings({
     en:{
         start: 'Start working',
         loading: 'Loading...',
+        exit: 'Exit',
         ru: 'Russian',
         en: 'English',
         titleBattery: 'Battery',
@@ -77,6 +78,7 @@ export const strings = new LocalizedStrings({
     ru: {
         start: 'Начать работу',
         loading: 'Загрузка...',
+        exit: 'Выйти',
         ru: 'Русский',
         en: 'Английский',
         titleBattery: 'Батарея',

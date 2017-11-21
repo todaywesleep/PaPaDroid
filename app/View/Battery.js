@@ -38,8 +38,8 @@ export const backgroundBattery = () => {
 @observer
 export class BatteryInfo extends Component {
     battery = NativeModules.BatteryInf;
-    @observable percentage = 'Loading...';
-    @observable status = 'Loading...';
+    @observable percentage = strings.loading;
+    @observable status = strings.loading;
     @observable source;
     timer;
     timerRealm;

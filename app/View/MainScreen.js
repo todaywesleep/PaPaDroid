@@ -4,7 +4,7 @@ import {
     StyleSheet,
     Text,
     View,
-    ScrollView
+    ScrollView, TouchableOpacity, TouchableHighlight
 } from 'react-native';
 import {colors} from "../Utils/Consts";
 import {DataBase} from "../Utils/DataBase";
@@ -12,6 +12,7 @@ import {DoubleStyledText} from "./DoubleStyledText";
 import {strings} from "../Strings/LocalizedStrings";
 import {observer} from 'mobx-react';
 import {observable, computed} from 'mobx';
+import {Actions} from 'react-native-router-flux';
 
 @observer
 export class MainScreen extends Component {
@@ -55,6 +56,10 @@ export class MainScreen extends Component {
         return timer.getMonth() + '/' + timer.getDate() + ' ' + timer.getHours() + ':' + timer.getMinutes();
     }
 
+    onPress(){
+        Actions.reset('Home');
+    }
+
     render() {
         return (
             <ScrollView style={styles.container}>
@@ -67,6 +72,15 @@ export class MainScreen extends Component {
                     <DoubleStyledText titleText={strings.averageChargingTime} regularText={this.getAverageCharge}/>
                     <DoubleStyledText titleText={strings.lastChargeTime} regularText={this.getLastChargeTime}
                                       isLast/>
+                </View>
+                <View style={styles.cardStyle}>
+                    <TouchableHighlight
+                        style={styles.buttonBox}
+                        onPress={() => this.onPress()}
+                        underlayColor={colors.cardBackgroundColor}
+                    >
+                        <Text style={styles.textStyle}> {strings.exit} </Text>
+                    </TouchableHighlight>
                 </View>
             </ScrollView>
         );
@@ -97,5 +111,13 @@ const styles = StyleSheet.create({
     cardStyle: {
         backgroundColor: colors.cardBackgroundColor,
         marginTop: 20,
+    },
+
+    textStyle: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        padding: 10,
     }
 });
