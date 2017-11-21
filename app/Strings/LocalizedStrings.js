@@ -3,6 +3,7 @@ import LocalizedStrings from 'react-native-localization';
 export const strings = new LocalizedStrings({
     en:{
         start: 'Start working',
+        loading: 'Loading...',
         ru: 'Russian',
         en: 'English',
         titleBattery: 'Battery',
@@ -75,6 +76,7 @@ export const strings = new LocalizedStrings({
     },
     ru: {
         start: 'Начать работу',
+        loading: 'Загрузка...',
         ru: 'Русский',
         en: 'Английский',
         titleBattery: 'Батарея',

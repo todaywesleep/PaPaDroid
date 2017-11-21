@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 import {
-    Platform,
     StyleSheet,
     Text,
     View,
-    ScrollView,
     TouchableHighlight,
     Image,
-    Dimensions,
     StatusBar,
     Modal,
+    ActivityIndicator
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {strings} from './../Strings/LocalizedStrings';
@@ -19,6 +17,11 @@ import {DataBase} from '../Utils/DataBase';
 import {backgroundBattery} from './Battery';
 import {backgroundTaskForMemory} from './Memory';
 import Application from "../../App";
+import {observer} from 'mobx-react';
+import {observable} from "mobx";
+import {LoadingView} from "./LoadingView";
+
+export let isLoading = false;
 
 BackgroundTask.define(() => {
     let battery = backgroundBattery();
@@ -48,7 +51,7 @@ export class StartScreen extends Component {
 
         BackgroundTask.schedule({period: 900});
         this.state = {
-            modalVisible: false
+            modalVisible: false,
         }
     }
 
@@ -146,6 +149,12 @@ export class StartScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+    centering: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 8,
+    },
+
     imageBox: {
         justifyContent: 'center',
         alignItems: 'center',

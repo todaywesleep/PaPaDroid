@@ -15,6 +15,7 @@ import {observer} from 'mobx-react';
 import {observable, computed} from 'mobx';
 import {DoubleStyledText} from './DoubleStyledText';
 import {DataBase} from "../Utils/DataBase";
+import {LoadingView} from "./LoadingView";
 
 export const backgroundBattery = () => {
     let battery = NativeModules.BatteryInf;
@@ -49,6 +50,10 @@ export class BatteryInfo extends Component {
         this.getBatteryInformation('PERCENTAGE');
         this.getBatteryInformation('STATUS');
 
+        this.state = {
+            isLoading: true,
+        };
+
         this.initIntervals();
     }
 
@@ -62,6 +67,10 @@ export class BatteryInfo extends Component {
                 this.initIntervals();
             }
         });
+
+        setTimeout(() => {
+            this.setState({isLoading: false})
+        }, 2000);
     }
 
     getImageBy(percentage) {
@@ -89,7 +98,7 @@ export class BatteryInfo extends Component {
         }
     }
 
-    initIntervals(){
+    initIntervals() {
         this.timer = setInterval(() => {
             this.getBatteryInformation('PERCENTAGE');
             this.getBatteryInformation('STATUS');
@@ -135,6 +144,8 @@ export class BatteryInfo extends Component {
                         </View>
                     </View>
                 </ScrollView>
+
+                <LoadingView show={this.state.isLoading}/>
             </View>
         )
     }
