@@ -103,7 +103,7 @@ export class BatteryInfo extends Component {
     }
 
     getBatteryInformation(type) {
-        this.battery.returnValue(type, (result) => {
+        this.battery.returnValue(type, strings.getLanguage(), (result) => {
             switch (type) {
                 case 'PERCENTAGE':
                     this.percentage = result;

@@ -18,6 +18,7 @@ import BackgroundTask from 'react-native-background-task';
 import {DataBase} from '../Utils/DataBase';
 import {backgroundBattery} from './Battery';
 import {backgroundTaskForMemory} from './Memory';
+import Application from "../../App";
 
 BackgroundTask.define(() => {
     let battery = backgroundBattery();
@@ -46,8 +47,6 @@ export class StartScreen extends Component {
         // });
 
         BackgroundTask.schedule({period: 900});
-        strings.setLanguage('en');
-
         this.state = {
             modalVisible: false
         }
@@ -85,9 +84,10 @@ export class StartScreen extends Component {
                             onPress={() => {
                                 strings.setLanguage('en');
                                 this.setModalVisible(false);
+                                Application.upd();
                                 this.forceUpdate();
                             }}
-                            underlayColor={'transparent'}
+                            underlayColor={colors.cardBackgroundColor}
                         >
                             <Text style={styles.textStyle}> {strings.en} </Text>
                         </TouchableHighlight>
@@ -97,9 +97,10 @@ export class StartScreen extends Component {
                             onPress={() => {
                                 strings.setLanguage('ru');
                                 this.setModalVisible(false);
+                                Application.upd();
                                 this.forceUpdate();
                             }}
-                            underlayColor={'transparent'}
+                            underlayColor={colors.cardBackgroundColor}
                         >
                             <Text style={styles.textStyle}> {strings.ru} </Text>
                         </TouchableHighlight>
@@ -126,7 +127,7 @@ export class StartScreen extends Component {
                     <TouchableHighlight
                         style={styles.buttonBox}
                         onPress={() => this.onPress()}
-                        underlayColor={'transparent'}
+                        underlayColor={colors.cardBackgroundColor}
                     >
                         <Text style={styles.textStyle}> {strings.start} </Text>
                     </TouchableHighlight>
@@ -134,7 +135,7 @@ export class StartScreen extends Component {
                     <TouchableHighlight
                         style={styles.buttonBox}
                         onPress={() => this.setModalVisible(!this.state.modalVisible)}
-                        underlayColor={'transparent'}
+                        underlayColor={colors.cardBackgroundColor}
                     >
                         <Text style={styles.textStyle}> {strings.changeLanguage} </Text>
                     </TouchableHighlight>

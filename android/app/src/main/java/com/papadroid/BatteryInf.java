@@ -31,14 +31,14 @@ public class BatteryInf extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void returnValue(String type, Callback successCallback, Callback errorCallback) {
+    public void returnValue(String type, String lang, Callback successCallback, Callback errorCallback) {
         try {
             switch (type) {
                 case "PERCENTAGE":
                     successCallback.invoke(BatteryInfUtils.getPercentage(getStatus()));
                     break;
                 case "STATUS":
-                    successCallback.invoke(BatteryInfUtils.getStatus(getStatus()));
+                    successCallback.invoke(BatteryInfUtils.getStatus(getStatus(), lang));
                     break;
             }
         } catch (Exception e) {
@@ -65,11 +65,13 @@ class BatteryInfUtils {
         return String.valueOf(level);
     }
 
-    public static String getStatus(Intent batteryStatus){
+    public static String getStatus(Intent batteryStatus, String lang){
         int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         if (status == BatteryManager.BATTERY_STATUS_FULL)
-            return  "Full charge";
+            return lang.equals("en") ? "Full charge" : "Полностью заряжена";
 
-        return status == BatteryManager.BATTERY_STATUS_CHARGING ? "Charging" : "Not charging";
+        return lang.equals("en") ?
+                (status == BatteryManager.BATTERY_STATUS_CHARGING ? "Charging" : "Not charging") :
+                (status == BatteryManager.BATTERY_STATUS_CHARGING ? "Заряжается" : "Разряжается");
     }
 }
