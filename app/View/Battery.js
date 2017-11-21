@@ -98,7 +98,7 @@ export class BatteryInfo extends Component {
 
         this.timerRealm = setInterval(() => {
             if (this.status !== 'Loading...')
-                DataBase.createBatteryWrite(this.status === 'Charging', new Date(), 'inApp');
+                DataBase.createBatteryWrite(this.status === 'Charging' || this.status === 'Заряжается', new Date(), 'inApp');
         }, 60000);
     }
 

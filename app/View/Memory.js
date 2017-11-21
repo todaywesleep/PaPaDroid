@@ -163,8 +163,8 @@ export class Memory extends Component {
 
                     <View style={[styles.cardStyle, {marginBottom: 20}]}>
                         <Text style={styles.customTitle}>{strings.storage}</Text>
-                        <DoubleStyledText titleText={strings.totalStorage} regularText={this.getTotalStorage}/>
-                        <DoubleStyledText titleText={strings.freeStorage} regularText={this.getFreeStorage}
+                        <DoubleStyledText titleText={strings.totalStorage} regularText={this.getFreeStorage}/>
+                        <DoubleStyledText titleText={strings.freeStorage} regularText={this.getTotalStorage}
                                           colors={'green'} isLast/>
 
                         <RAMShape data={[this.freeStorage, this.state.totalStorage]} colors={['green', 'white']}

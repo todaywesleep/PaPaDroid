@@ -34,7 +34,7 @@ export class DataBase {
             lastChargeDate: new Date(),
             averageChargingTime: 0,
             isCharging: false,
-            boofTime: 0
+            boofTime: 0,
         };
         let chargeTime = 0;
         let newDate;
