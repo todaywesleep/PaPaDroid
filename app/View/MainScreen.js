@@ -4,7 +4,10 @@ import {
     StyleSheet,
     Text,
     View,
-    ScrollView, TouchableOpacity, TouchableHighlight
+    ScrollView,
+    TouchableOpacity,
+    TouchableHighlight,
+    NativeModules
 } from 'react-native';
 import {colors} from "../Utils/Consts";
 import {DataBase} from "../Utils/DataBase";
@@ -21,18 +24,54 @@ export class MainScreen extends Component {
     @observable Storage;
     @observable Battery;
     @observable Time;
+    timeToFullCharge;
+    resTime = 0;
+    percentage = -1;
+    battery = NativeModules.BatteryInf;
 
     constructor(props) {
         super(props);
         this.RAM = DataBase.returnLastBlock('RAM') === undefined ? {freePercentage: 0, totalSpace: 0} : DataBase.returnLastBlock('RAM');
         this.Storage = DataBase.returnLastBlock('Storage') === undefined ? {freePercentage: 0, totalSpace: 0} : DataBase.returnLastBlock('Storage');
         this.Battery = DataBase.returnLastBlock('Battery') === undefined ? {lastChargeDate: new Date(), averageChargingTime: 0, isCharging: false, boofTime: 0,} : DataBase.returnLastBlock('Battery');
+        this.timeToFullCharge = DataBase.checkStateAvailabilityBattery() ? DataBase.returnLastBlock('ChargeTime')[0].timeToFullCharge : strings.calculating;
+
+        if (this.timeToFullCharge === strings.calculating){
+            this.percentage = this.getPercentage();
+        }
 
         this.timer = setInterval(() => {
             this.RAM = DataBase.returnLastBlock('RAM') === undefined ? {freePercentage: 0, totalSpace: 0} : DataBase.returnLastBlock('RAM');
             this.Storage = DataBase.returnLastBlock('Storage') === undefined ? {freePercentage: 0, totalSpace: 0} : DataBase.returnLastBlock('Storage');
             this.Battery = DataBase.returnLastBlock('Battery') === undefined ? {lastChargeDate: new Date(), averageChargingTime: 0, isCharging: false, boofTime: 0,} : DataBase.returnLastBlock('Battery');
         }, 60000);
+    }
+
+    getPercentage(){
+        this.battery.returnValue('PERCENTAGE', strings.getLanguage(), (result) => {
+            return result;
+        }, (error) => {
+            console.warn(error);
+            return error.toString();
+        });
+    }
+
+    componentWillMount(){
+        this.percentage = this.getPercentage();
+
+        if (this.timeToFullCharge === strings.calculating){
+            let interval = setInterval(() => {
+                if (this.percentage === this.getPercentage() + 1){
+                    DataBase.createTimeWrite(this.resTime);
+                    clearInterval(interval);
+                }
+                this.resTime += 5;
+            }, 5000)
+        }else{
+            setInterval(() => {
+                this.timeToFullCharge = Math.floor((100 - this.getPercentage() * DataBase.returnLastBlock('ChargeTime')[0].timeToFullCharge) / 60);
+            }, 5000);
+        }
     }
 
     @computed
@@ -56,6 +95,10 @@ export class MainScreen extends Component {
         return timer.getMonth() + '/' + timer.getDate() + ' ' + timer.getHours() + ':' + timer.getMinutes();
     }
 
+    @computed get getTimeToFullCharge(){
+        return this.timeToFullCharge + ' min';
+    }
+
     onPress(){
         Actions.reset('Home');
     }
@@ -70,6 +113,7 @@ export class MainScreen extends Component {
                     <DoubleStyledText titleText={strings.averageRAM} regularText={this.getAverageRam}/>
                     <DoubleStyledText titleText={strings.averageStorage} regularText={this.getAverageStorage}/>
                     <DoubleStyledText titleText={strings.averageChargingTime} regularText={this.getAverageCharge}/>
+                    <DoubleStyledText titleText={strings.timeToCharge} regularText={this.getAverageCharge}/>
                     <DoubleStyledText titleText={strings.lastChargeTime} regularText={this.getLastChargeTime}
                                       isLast/>
                 </View>

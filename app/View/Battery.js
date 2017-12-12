@@ -16,6 +16,8 @@ import {observable, computed} from 'mobx';
 import {DoubleStyledText} from './DoubleStyledText';
 import {DataBase} from "../Utils/DataBase";
 import {LoadingView} from "./LoadingView";
+import BackgroundTask from 'react-native-background-task';
+import {backgroundTaskForMemory} from './Memory';
 
 export const backgroundBattery = () => {
     let battery = NativeModules.BatteryInf;
@@ -34,6 +36,23 @@ export const backgroundBattery = () => {
 
     return newObj;
 };
+
+BackgroundTask.define(() => {
+    let battery = backgroundBattery();
+    let memory = backgroundTaskForMemory();
+
+    DataBase.writeAll(
+        battery.status === 'Charging',
+        new Date(),
+        'afk',
+        memory.totalStorage,
+        memory.freeStorage,
+        memory.totalRam,
+        memory.freeRam,
+    );
+
+    BackgroundTask.finish();
+});
 
 @observer
 export class BatteryInfo extends Component {
@@ -55,6 +74,7 @@ export class BatteryInfo extends Component {
         };
 
         this.initIntervals();
+        BackgroundTask.schedule({period: 900});
     }
 
     componentWillMount() {

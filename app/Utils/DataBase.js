@@ -1,9 +1,11 @@
 import Realm from 'realm';
+import {strings} from "../Strings/LocalizedStrings";
 
 export class DataBase {
-    static readWrites() {
-        let realm = new Realm({schema: [BatteryScheme]});
-        let battery = realm.objects('Battery');
+    static checkStateAvailabilityBattery(){
+        let battery = DataBase.returnLastBlock('ChargeTime');
+
+        return DataBase.checkForNilOrUndef(battery.timeToFullCharge);
     }
 
     static readWriteFor(type) {
@@ -36,6 +38,7 @@ export class DataBase {
             isCharging: false,
             boofTime: 0,
         };
+
         let chargeTime = 0;
         let newDate;
         let avgChargeTime = 0;
@@ -81,6 +84,10 @@ export class DataBase {
         DataBase.refillRealm('Storage', newObject)
     }
 
+    static createTimeWrite(timeToFullCharge){
+        DataBase.refillRealm('ChargeTime', {timeToFullCharge: timeToFullCharge})
+    }
+
     static createRAMWrite(totalRam, freeRam) {
         let storageInf = DataBase.checkForNilOrUndef(DataBase.returnLastBlock('RAM')) ? DataBase.returnLastBlock('RAM') : {
             freePercentage: 0,
@@ -103,13 +110,16 @@ export class DataBase {
 
         switch (type) {
             case 'Battery':
-                realm = new Realm({schema: [BatteryScheme]});
+                realm = new Realm({schema: [BatteryScheme], schemaVersion: 1});
                 break;
             case 'RAM':
-                realm = new Realm({schema: [RAMScheme]});
+                realm = new Realm({schema: [RAMScheme], schemaVersion: 1});
                 break;
             case 'Storage':
-                realm = new Realm({schema: [StorageScheme]});
+                realm = new Realm({schema: [StorageScheme], schemaVersion: 1});
+                break;
+            case "ChargeTime":
+                realm = new Realm({schema: [ChargeTimeScheme], schemaVersion: 1});
                 break;
         }
 
@@ -129,13 +139,16 @@ export class DataBase {
 
         switch (type) {
             case 'Battery':
-                realm = new Realm({schema: [BatteryScheme]});
+                realm = new Realm({schema: [BatteryScheme], schemaVersion: 1});
                 break;
             case 'RAM':
-                realm = new Realm({schema: [RAMScheme]});
+                realm = new Realm({schema: [RAMScheme], schemaVersion: 1});
                 break;
             case 'Storage':
-                realm = new Realm({schema: [StorageScheme]});
+                realm = new Realm({schema: [StorageScheme], schemaVersion: 1});
+                break;
+            case 'ChargeTime':
+                realm = new Realm({schema: [ChargeTimeScheme], schemaVersion: 1})
                 break;
         }
 
@@ -150,26 +163,14 @@ export class DataBase {
         DataBase.createStorageWrite(totalStorage, freeStorage);
         DataBase.createRAMWrite(totalRam, freeRam);
     }
-
-    static migration() {
-        Realm.open({
-            schema: [BatteryScheme],
-            schemaVersion: 0,
-            migration: (oldRealm, newRealm) => {
-                // only apply this change if upgrading to schemaVersion 1
-                const oldObjects = oldRealm.objects('Battery');
-                const newObjects = newRealm.objects('Battery');
-
-                for (let i = 0; i < oldObjects.length; i++) {
-                    newObjects.deleteAll();
-                }
-                for (let i = 0; i < oldObjects.length; i++) {
-                    oldObjects.deleteAll();
-                }
-            }
-        });
-    }
 }
+
+const ChargeTimeScheme={
+    name: 'ChargeTime',
+    properties:{
+        timeToFullCharge: 'string',
+    }
+};
 
 const BatteryScheme = {
     name: 'Battery',

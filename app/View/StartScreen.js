@@ -12,44 +12,21 @@ import {
 import {Actions} from 'react-native-router-flux';
 import {strings} from './../Strings/LocalizedStrings';
 import {colors} from '../Utils/Consts';
-import BackgroundTask from 'react-native-background-task';
 import {DataBase} from '../Utils/DataBase';
-import {backgroundBattery} from './Battery';
-import {backgroundTaskForMemory} from './Memory';
 import Application from "../../App";
 import {observer} from 'mobx-react';
 import {observable} from "mobx";
 import {LoadingView} from "./LoadingView";
 
-export let isLoading = false;
-
-BackgroundTask.define(() => {
-    let battery = backgroundBattery();
-    let memory = backgroundTaskForMemory();
-
-    DataBase.writeAll(
-        battery.status === 'Charging',
-        new Date(),
-        'afk',
-        memory.totalStorage,
-        memory.freeStorage,
-        memory.totalRam,
-        memory.freeRam,
-    );
-
-    BackgroundTask.finish();
-});
-
 export class StartScreen extends Component {
     constructor(props) {
         super(props);
 
-        // let realm = new Realm();
-        // realm.write(() => {
-        //     realm.deleteAll();
-        // });
+        let realm = new Realm();
+        realm.write(() => {
+            realm.deleteAll();
+        });
 
-        BackgroundTask.schedule({period: 900});
         this.state = {
             modalVisible: false,
             startMargin: new Animated.Value(0),

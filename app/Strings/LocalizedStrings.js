@@ -4,7 +4,9 @@ export const strings = new LocalizedStrings({
     en:{
         start: 'Start working',
         loading: 'Loading...',
+        calculating: 'Calculating...',
         exit: 'Exit',
+        timeToCharge: 'Time to fool charge: ',
         ru: 'Russian',
         en: 'English',
         titleBattery: 'Battery',
@@ -78,6 +80,8 @@ export const strings = new LocalizedStrings({
     ru: {
         start: 'Начать работу',
         loading: 'Загрузка...',
+        timeToCharge: 'Время до полной зарядки: ',
+        calculating: 'Идёт подсчёт...',
         exit: 'Выйти',
         ru: 'Русский',
         en: 'Английский',
